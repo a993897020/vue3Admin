@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-21 15:57:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-01 15:13:08
+ * @LastEditTime: 2022-07-01 15:49:45
  * @Description: 
 -->
 <template>
@@ -50,7 +50,7 @@
             @open="handleOpen"
             @close="handleClose"
           >
-            <el-menu-item index="dashboard">
+            <el-menu-item index="/dashboard">
               <template #title>
                 <el-icon>
                   <HomeFilled />
@@ -71,6 +71,14 @@
               >
               <el-menu-item index="1-2">item one</el-menu-item>
             </el-sub-menu>
+            <el-menu-item index="/imgList">
+              <template #title>
+                <el-icon>
+                  <HomeFilled />
+                </el-icon>
+                <span>图片列表</span>
+              </template>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-container>

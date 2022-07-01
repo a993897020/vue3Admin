@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 15:48:17
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-06-28 11:39:17
+ * @LastEditTime: 2022-07-01 16:11:54
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -12,6 +12,8 @@ import Infomation from '../page/info/infomation.vue'
 import dashboard from '../page/dashboard.vue'
 import NotFound from '../page/NotFound.vue'
 import Layout from '../components/Layout.vue'
+import SignCanvas from '../components/SignCanvas/index.vue'
+import imgList from '../page/imgList/Main.vue'
 import { App } from 'vue'
 
 const routerHistory = createWebHistory()
@@ -36,6 +38,10 @@ const router = createRouter({
 					component: HelloWorld
 				},
 				{
+					path: '/imgList',
+					component: imgList
+				},
+				{
 					path: '/infoManagement',
 					component: Infomation,
 					children: [
@@ -43,6 +49,10 @@ const router = createRouter({
 					]
 				},
 			]
+		},
+		{
+			path: '/signCanvas',
+			component: SignCanvas
 		},
 		{ path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound, },
 	]
