@@ -1,0 +1,432 @@
+/** 全局共享mixin，无需再单独 @import*/
+/*文本格式化，超出范围，显示省略号*/
+@mixin text-overflow($width: 100%, $display: block) {
+    width: $width;
+    display: $display;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+  
+  // 字体
+  @mixin font-family {
+    font-weight: 500;
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB",
+      "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  
+  // 固定fix样式
+  @mixin setFixed($width, $height) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: $width;
+    height: $height;
+  }
+  
+  // 文本超出一行不换行
+  @mixin no-wrap() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  // 文本超出num行不换行
+  @mixin no-wrap-more($num) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $num;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* 清除浮动 */
+  @mixin clearfix {
+    &:after {
+      clear: both;
+      content: ".";
+      display: block;
+      height: 0;
+      line-height: 0;
+      overflow: hidden;
+    }
+  }
+  
+  /*弹性盒子居中（传入null不设置该属性）*/
+  @mixin flex-center(
+    $direction: row,
+    $justify: center,
+    $align: center,
+    $flex-wrap: null
+  ) {
+    display: -webkit-flex;
+    display: flex;
+  
+    @if ($direction !=null) {
+      flex-direction: $direction;
+    }
+  
+    @if ($justify !=null) {
+      justify-content: $justify;
+    }
+  
+    @if ($align !=null) {
+      align-items: $align;
+    }
+  
+    @if ($flex-wrap !=null) {
+      flex-wrap: $flex-wrap;
+    }
+  }
+  
+  /*绝对定位  参数顺序：上右下左*/
+  @mixin positionAbsolute($top: null, $right: null, $bottom: null, $left: null) {
+    position: absolute;
+  
+    @if ($left != "" & & $left !=null) {
+      left: $left;
+    }
+  
+    @if ($right != "" & & $right !=null) {
+      right: $right;
+    }
+  
+    @if ($top != "" & & $top !=null) {
+      top: $top;
+    }
+  
+    @if ($bottom != "" & & $bottom !=null) {
+      bottom: $bottom;
+    }
+  }
+  
+  /*左浮动*/
+  @mixin float-left($width: 19%, $margin-right: 1.2%) {
+    width: $width;
+    float: left;
+  
+    @if ($margin-right !=null) {
+      margin-right: $margin-right;
+    }
+  }
+  
+  /*右浮动*/
+  @mixin float-Right($width: 19%, $margin-left: 1.2%) {
+    width: $width;
+    float: right;
+  
+    @if ($margin-left !=null) {
+      margin-left: $margin-left;
+    }
+  }
+  
+  /*渐变(从上到下）*/
+  @mixin linear-gradient(
+    $direction: bottom,
+    $color1: transparent,
+    $color2: #306eff,
+    $color3: transparent
+  ) {
+    //background: -webkit-linear-gradient($direction,$colorTop, $colorCenter, $colorBottom); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient($direction, $color1, $color2, $color3);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient($direction, $color1, $color2, $color3);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(to $direction, $color1, $color2, $color3);
+    /* 标准的语法 */
+  }
+  
+  @mixin linear-gradient-primary (
+    $direction: left,
+    $color1: #00d2ff,
+    $color2: #3a7bd5,
+  ) {
+    background: #00d2ff; /* fallback for old browsers */
+    background: -o-linear-gradient($direction, $color1, $color2);/* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient($direction, $color1, $color2);/* Firefox 3.6 - 15 */
+    background: linear-gradient(to $direction, $color1, $color2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    // background: -webkit-linear-gradient(to $direction, $color1, $color2); /* Chrome 10-25, Safari 5.1-6 */
+    // background-image: linear-gradient(-90deg, #29bdd9 0%, #276ace 100%);
+  }
+  
+  @mixin linear-gradient-warning (
+    $direction: left,
+    $color1: #ffe259,
+    $color2: #ffa751,
+  ) {
+    background: #ffe259; /* fallback for old browsers */
+    background: -o-linear-gradient($direction, $color1, $color2);/* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient($direction, $color1, $color2);/* Firefox 3.6 - 15 */
+    background: linear-gradient(to $direction, $color1, $color2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    // background: -webkit-linear-gradient(to $direction, $color1, $color2); /* Chrome 10-25, Safari 5.1-6 */
+  }
+  
+  /* 行高 */
+  @mixin line-height($height: 30px, $line-height: 30px) {
+    @if ($height !=null) {
+      height: $height;
+    }
+  
+    @if ($line-height !=null) {
+      line-height: $line-height;
+    }
+  }
+  
+  /* 画三角形 */
+  @mixin triangle($width: 10px, $direction: top, $color: $bgBlueLight) {
+    border: $width solid transparent;
+  
+    @if ($direction==top) {
+      // 上三角
+      border-bottom-color: $color;
+    }
+  
+    @if ($direction==bottom) {
+      // 下三角
+      border-top-color: $color;
+    }
+  
+    @if ($direction==left) {
+      // 左三角
+      border-right-color: $color;
+    }
+  
+    @if ($direction==right) {
+      // 右三角
+      border-left-color: $color;
+    }
+  }
+  
+  /* 文本阴影 */
+  @mixin text-show(
+    $h-shadow: 0px,
+    $v-shadow: 0px,
+    $blur: 10px,
+    $color: rgba(0, 180, 255, 0.7)
+  ) {
+    text-shadow: $h-shadow $v-shadow $blur $color;
+  }
+  
+  /* 链接样式 */
+  @mixin hoverStyle(
+    $style: (
+      color: #d9fdff
+    ),
+    $hoverStyle: (
+      color: #306eff
+    )
+  ) {
+    text-decoration: none;
+  
+    @each $key, $value in $style {
+      #{$key}: #{$value};
+    }
+  
+    @if ($hoverStyle !=null & & $hoverStyle != "") {
+      &:hover {
+        @each $key, $value in $hoverStyle {
+          #{$key}: #{$value};
+        }
+      }
+    }
+  }
+  
+  /* 定义滚动条样式 圆角和阴影不需要则传入null */
+  @mixin scrollBar(
+    $width: 4px,
+    $height: 8px,
+    $outColor: $globalBg,
+    $innerColor: #c2c2c2,
+    $radius: 5px,
+    $shadow: null
+  ) {
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    &::-webkit-scrollbar {
+      width: $width;
+      height: $height;
+      background-color: $outColor;
+    }
+  
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track {
+      @if ($shadow !=null) {
+        -webkit-box-shadow: $shadow;
+      }
+  
+      @if ($radius !=null) {
+        border-radius: $radius;
+      }
+  
+      background-color: $outColor;
+    }
+  
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb {
+      @if ($shadow !=null) {
+        -webkit-box-shadow: $shadow;
+      }
+  
+      @if ($radius !=null) {
+        border-radius: $radius;
+      }
+  
+      background-color: $innerColor;
+      border: 1px solid $innerColor;
+    }
+  }
+  
+  /* 定义滚动条样式 圆角和阴影不需要则传入null,蓝色版 */
+  @mixin scrollBarBule(
+    $width: 8px,
+    $height: 8px,
+    $outColor: #EFEFEF,
+    $innerColor: rgb(83, 168, 255),
+    $radius: 5px,
+    $shadow: null
+  ) {
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    &::-webkit-scrollbar {
+      width: $width;
+      height: $height;
+      background-color: $outColor;
+    }
+  
+    /*定义滚动条轨道 内阴影+圆角*/
+    &::-webkit-scrollbar-track {
+      @if ($shadow !=null) {
+        -webkit-box-shadow: $shadow;
+      }
+  
+      @if ($radius !=null) {
+        border-radius: $radius;
+      }
+  
+      background-color: $outColor;
+    }
+  
+    /*定义滑块 内阴影+圆角*/
+    &::-webkit-scrollbar-thumb {
+      @if ($shadow !=null) {
+        -webkit-box-shadow: $shadow;
+      }
+  
+      @if ($radius !=null) {
+        border-radius: $radius;
+      }
+  
+      background-color: $innerColor;
+      border: 1px solid $innerColor;
+    }
+  }
+  
+  /* css3动画 默认3s宽度到200px */
+  @mixin animation(
+    $from: (
+      width: 0px
+    ),
+    $to: (
+      width: 200px
+    ),
+    $name: mymove,
+    $animate: mymove 2s 1 linear infinite
+  ) {
+    -webkit-animation: $animate;
+    -o-animation: $animate;
+    animation: $animate;
+  
+    @keyframes #{$name} {
+      from {
+        @each $key, $value in $from {
+          #{$key}: #{$value};
+        }
+      }
+  
+      to {
+        @each $key, $value in $to {
+          #{$key}: #{$value};
+        }
+      }
+    }
+  
+    @-webkit-keyframes #{$name} {
+      from {
+        @each $key, $value in $from {
+          $key: $value;
+        }
+      }
+  
+      to {
+        @each $key, $value in $to {
+          $key: $value;
+        }
+      }
+    }
+  }
+  
+  /* 圆形盒子 */
+  @mixin circle($size: 11px, $bg: #fff) {
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+    line-height: $size;
+    text-align: center;
+    background: $bg;
+  }
+  
+  /*外阴影*/
+  @mixin boxShadow() {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  /*隐藏滚动条*/
+  @mixin hideScrollBar {
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    overflow-x: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+  }
+  
+  /*一级标题：22px + B*/
+  @mixin _h1 {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  /*二级标题：22px + B*/
+  @mixin _h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /*三级标题：22px + B*/
+  @mixin _h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  /*边框磨砂效果*/
+  @mixin mosha_border {
+    background: hsla(0, 0%, 100%, 1) border-box;
+    box-shadow: 0 0 0 1px hsla(0, 0%, 80%, 0.1) inset,
+      0 0.5em 1em rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 1px hsla(0, 0%, 100%, 0.1);
+    border-radius: 20px;
+    border: 1px solid $border;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: -30px;
+      z-index: -1;
+      -webkit-filter: blur(10px);
+      filter: blur(10px);
+    }
+  }

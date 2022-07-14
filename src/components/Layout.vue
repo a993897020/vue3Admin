@@ -2,14 +2,14 @@
  * @Author: 关振俊
  * @Date: 2022-06-21 15:57:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-01 15:49:45
+ * @LastEditTime: 2022-07-07 17:40:37
  * @Description: 
 -->
 <template>
   <div class="container-box">
     <el-container direction="vertical">
       <!-- 头部 -->
-      <el-header style="background-color: #545c64">
+      <el-header class="layout-header">
         <el-menu
           background-color="#545c64"
           text-color="#fff"
@@ -37,7 +37,7 @@
         </el-menu>
       </el-header>
 
-      <el-container>
+      <el-container class="main-wrap">
         <!-- 左菜单 -->
         <el-aside class="left-menu">
           <el-menu
@@ -81,7 +81,7 @@
             </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-container>
+        <el-container class="content-wrap">
           <el-main>
             <router-view></router-view>
           </el-main>
@@ -111,9 +111,22 @@ const handleClose = (key: string, keyPath: string[]) => {
 };
 </script>
 <style lang="scss" scoped>
+@import "../styles/colorMixins.scss";
+@import "../styles/mixins.scss";
 .container-box {
   height: 100vh;
   overflow-y: scroll;
+}
+.layout-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 16px);
+  padding: 0;
+  z-index: 2;
+}
+.main-wrap {
+  margin-top: 58px;
 }
 .flex-grow {
   flex-grow: 1;
@@ -126,6 +139,12 @@ const handleClose = (key: string, keyPath: string[]) => {
 .left-menu {
   width: 200px;
   height: calc(100vh - 58px);
+  position: fixed;
+  left: 0;
+  top: 58px;
+}
+.content-wrap {
+  margin-left: 200px;
 }
 
 .el-menu--horizontal {

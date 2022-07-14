@@ -1,0 +1,44 @@
+/** 全局共享scss变量，无需再单独 @import*/
+// 颜色
+$color_main: #086CB3;
+$color_warn: #E6A23C;
+$color_success: #14AF64;
+$color_danger: #C4183C;
+$color_info: #B1B0B0;
+$globalBg: #F8F9FB;
+$globalTextColor: #515151;
+// sidebar
+$menuText:#515151;
+$menuActiveText:#14AF64;
+$menuBg: #F6F8F9;
+$menuHover: #EFF1F3;
+$bgGrey: #a8a8a8;
+    // border
+$border: #e9e8e8;
+$shadow-color: #e6e6e6;
+    // table
+$tableHeaderBg: #FAFAFA;
+// 字体
+$h1: 22px;
+$h2: 20px;
+$h3: 18px;
+$menu: 17px;
+$subMenu: 16px;
+$text: 16px;
+$tableTitle: 16px;
+
+//文本行距
+$textLineHeight: 1.8;
+
+// 案件详情相关字体大小
+$case_detail_nav_fontSize: 17px;
+$case_detail_content_title_fontSize: 17px;
+$case_detail_content_text_fontSize: 16px;
+//button
+$button_info_bg: rgb(133, 130, 130);
+$button_info_color: #ffffff;
+$button_success_bg: rgba(46, 141, 237, 1);
+$button_success_color: #ffffff;
+
+
+

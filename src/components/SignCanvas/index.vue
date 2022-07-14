@@ -2,15 +2,16 @@
  * @Author: 关振俊
  * @Date: 2022-07-01 16:07:26
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-01 17:19:58
+ * @LastEditTime: 2022-07-14 17:44:17
  * @Description: 画布签名
 -->
 <template>
   <div class="sign-canvas-wrap">
     <h1>签名功能</h1>
-    <div class="canvas-wrap">
+    <div class="canvas-wrap" :style="canvasWrapS" ref="canvasWrap">
       <canvas
         ref="signCanvas"
+        :style="canvasS"
         @mousedown="handleMouseDown"
         @mousemove="handleMouseMove"
         @mouseup="handleMouseUp"
@@ -19,6 +20,7 @@
     <div class="btn-wrap">
       <el-button @click="clearCanvas">清空</el-button>
       <el-button @click="createCancas">生成</el-button>
+      <el-button @click="rorateCancas">选择90°</el-button>
     </div>
     <div class="canvas-img-list">
       <img
@@ -32,7 +34,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { onMounted, Ref, ref } from "vue";
+import { computed, onMounted, Ref, ref } from "vue";
 const signCanvas: Ref<any> = ref();
 const ctx = ref();
 const isWrite = ref(false);
@@ -41,6 +43,8 @@ const y = ref(0);
 const canvasWidth = ref(300);
 const canvasHeight = ref(150);
 const canvasImgList: any = ref([]);
+const isRotate = ref(false);
+const canvasWrap: Ref<any> = ref();
 const initCanvas = () => {
   if (signCanvas.value) {
     signCanvas.value.width = canvasWidth.value;
@@ -87,14 +91,50 @@ const writeCanvas = (e: any) => {
 const clearCanvas = () => {
   console.log("clear");
   ctx.value.beginPath();
-  ctx.value.fillRect(0, 0, canvasWidth.value, canvasHeight.value); //填充画布
-  ctx.value.clearRect(0, 0, canvasWidth.value, canvasHeight.value); //清空画布
+  const width = isRotate.value ? canvasHeight.value : canvasWidth.value;
+  const height = isRotate.value ? canvasWidth.value : canvasHeight.value;
+  ctx.value.fillRect(0, 0, width, height); //填充画布
+  ctx.value.clearRect(0, 0, width, height); //清空画布
 };
 /**生成画布 */
 const createCancas = () => {
   console.log("create");
   const url: string = signCanvas.value.toDataURL("image/png", 1); //生成画布base64
   canvasImgList.value.push(url);
+};
+/**切换横竖屏 */
+const rorateCancas = () => {
+  isRotate.value = !isRotate.value;
+  if (!isRotate.value) {
+    // 竖屏
+    signCanvas.value.height = canvasHeight.value;
+    signCanvas.value.width = canvasWidth.value;
+  } else {
+    // 横屏
+    //将签名还原翻转，就可以保证在横屏情况下保证画笔的方向跟手势一致，然后再进行高度和宽度的调整。
+    signCanvas.value.height = canvasWidth.value;
+    signCanvas.value.width = canvasHeight.value;
+  }
+};
+const canvasWrapS = () => {
+  return {
+    width: isRotate.value
+      ? canvasHeight.value + "px"
+      : canvasWidth.value + "px",
+    height: isRotate.value
+      ? canvasWidth.value + "px"
+      : canvasHeight.value + "px",
+    transform: `rotate(${isRotate.value ? "90deg" : "0deg"})`,
+    transformOrigin: `${canvasHeight.value / 2}px ${canvasHeight.value / 2}px`,
+  };
+};
+const canvasS = () => {
+  return {
+    transform: `rotate(${isRotate.value ? "-90deg" : "0deg"})`,
+    transformOrigin: isRotate.value
+      ? `${canvasHeight.value / 2}px ${canvasHeight.value / 2}px`
+      : `${canvasWidth.value / 2}px ${canvasWidth.value / 2}px`,
+  };
 };
 onMounted(() => {
   initCanvas();
