@@ -2,14 +2,13 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 10:23:42
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-06-20 10:51:09
+ * @LastEditTime: 2022-07-15 10:23:31
  * @Description: 
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import * as path from 'path'
 import { svgBuilder } from './src/plugins/svgBuilder';
-
+const path=require('path')
 
 const resolve = (dir: string) => path.join(__dirname, dir)
 

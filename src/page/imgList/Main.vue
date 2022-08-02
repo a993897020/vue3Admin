@@ -2,11 +2,11 @@
  * @Author: 关振俊
  * @Date: 2022-07-01 15:50:32
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-07 16:52:32
+ * @LastEditTime: 2022-07-15 10:14:42
  * @Description: 
 -->
 <template>
-  <div class="imgList-wrap">
+  <div class="imgList-wrap" v-loading="loading">
     <div class="demo-image__lazy">
       <el-image v-for="(url, i) in urls" :key="i" :src="url" lazy />
     </div>
@@ -14,11 +14,20 @@
 </template>
 <script lang='ts' setup>
 import Mock, { Random } from "mockjs";
-const imgList = Mock.mock({
-  "data|20": [Random.image()],
+import { onMounted, ref } from "vue";
+import { onPending } from "utils/tools";
+const urls: any = ref([]);
+const loading: any = ref(true);
+onMounted(() => {
+  onPending(1000).then(() => {
+    const imgList = Mock.mock({
+      "data|20": [Random.image()],
+    });
+    console.log(imgList);
+    urls.value = [...imgList.data];
+    loading.value = false;
+  });
 });
-console.log(imgList);
-const urls: any[] = [...imgList.data];
 </script>
 <style scoped>
 .demo-image__lazy {
@@ -34,5 +43,9 @@ const urls: any[] = [...imgList.data];
 }
 .demo-image__lazy .el-image:last-child {
   margin-bottom: 0;
+}
+.imgList-wrap {
+  width: 100%;
+  min-height: 60vh;
 }
 </style>

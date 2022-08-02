@@ -12,8 +12,16 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
-    "types": ["element-plus/global"]
+    "types": ["element-plus/global"],
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "utils/*":["src/utils/*"],
+      "comps/*":["src/components/*"],
+      "styles/*":["src/styles/*"]
+    },
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

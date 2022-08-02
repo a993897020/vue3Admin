@@ -2,18 +2,18 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 15:48:17
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-01 16:11:54
+ * @LastEditTime: 2022-07-19 10:55:42
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
-import HelloWorld from '../components/HelloWorld.vue'
-import allInfo from '../page/info/allInfo.vue'
-import Infomation from '../page/info/infomation.vue'
-import dashboard from '../page/dashboard.vue'
-import NotFound from '../page/NotFound.vue'
-import Layout from '../components/Layout.vue'
-import SignCanvas from '../components/SignCanvas/index.vue'
-import imgList from '../page/imgList/Main.vue'
+import HelloWorld from 'comps/HelloWorld.vue'
+import allInfo from '@/page/info/allInfo.vue'
+import Infomation from '@/page/info/infomation.vue'
+import dashboard from '@/page/dashboard.vue'
+import NotFound from '@/page/NotFound.vue'
+import Layout from 'comps/Layout.vue'
+import SignCanvas from 'comps/SignCanvas/index.vue'
+import imgList from '@/page/imgList/Main.vue'
 import { App } from 'vue'
 
 const routerHistory = createWebHistory()
@@ -48,11 +48,15 @@ const router = createRouter({
 						{ path: '/infoManagement/allInfo', component: allInfo }
 					]
 				},
+				{
+					path: '/signCanvas',
+					component: SignCanvas
+				},
+				{
+					path: '/cellMerge',
+					component: ()=>import('@/components/CellMerge.vue')
+				},
 			]
-		},
-		{
-			path: '/signCanvas',
-			component: SignCanvas
 		},
 		{ path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound, },
 	]
