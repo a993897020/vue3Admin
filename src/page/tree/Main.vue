@@ -1,61 +1,17 @@
 <!--
  * @Author: 关振俊
- * @Date: 2022-08-10 09:09:22
+ * @Date: 2022-08-08 10:02:53
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-20 10:56:25
- * @Description: 
+ * @LastEditTime: 2022-09-01 17:19:01
+ * @Description: 流程预览
 -->
 <template>
-  <div>
-    <div v-if="list.length == 1">
-      <div v-for="(item, index) in list" :key="index" class="branch-one">
-        <div class="condition-node-box">
-          <div class="node-line"></div>
-          <div class="deal-node-box">
-            <div class="audit-background head-row">
-              {{ item.taskName }}
-            </div>
-            <!-- <div class="foot-row">{{ item.approverName }}</div> -->
-            <!-- <a class="del-node">×</a> -->
-          </div>
-          <div class="add-btn-box">
-            <!-- <button type="button" class="add-bar">+</button> -->
-          </div>
-        </div>
-        <node-tree v-if="item.children" :list="item.children"></node-tree>
-      </div>
-    </div>
-    <div v-if="list.length > 1" class="flow-child-box">
-      <div class="branch">
-        <div class="branch-box">
-          <div v-for="(item, index) in list" :key="index" class="col-box">
-            <div v-if="index == 0" class="top-left-cover-line"></div>
-            <div
-              v-if="index == list.length - 1"
-              class="top-right-cover-line"
-            ></div>
-            <div class="branch-one">
-              <div class="condition-node-box">
-                <div class="node-line"></div>
-                <div class="deal-node-box">
-                  <div class="audit-background head-row">
-                    {{ item.taskName }}
-                  </div>
-                  <!-- <div class="foot-row">{{ item.approverName }}</div> -->
-                  <!-- <a class="del-node">×</a> -->
-                </div>
-                <div class="add-btn-box">
-                  <!-- <button type="button" class="add-bar">+</button> -->
-                </div>
-              </div>
-            </div>
-            <node-tree v-if="item.children" :list="item.children"></node-tree>
-            <div v-if="index == 0" class="bottom-left-cover-line"></div>
-            <div
-              v-if="index == list.length - 1"
-              class="bottom-right-cover-line"
-            ></div>
-          </div>
+  <div class="process-wrap">
+    <div class="wrapper" v-if="flowArr.length > 0">
+      <div class="flow-parent-box">
+        <div class="deal-node-box">
+          <div class="fill-background head-row">开始</div>
+          <!-- <div class="foot-row">默认发起人</div> -->
         </div>
         <div class="line-in-middle">
           <div class="node-line"></div>
@@ -64,17 +20,61 @@
           </div>
         </div>
       </div>
+      <div
+        class="flow-parent-box"
+        v-for="(item, index) in flowArr"
+        :key="index"
+      >
+        <div class="flow-parent-box">
+          <div class="deal-node-box">
+            <div class="audit-background head-row">{{ item.taskName }}</div>
+            <!-- <div class="foot-row">{{ item.approverName }}</div> -->
+          </div>
+          <div class="line-in-middle">
+            <div class="node-line"></div>
+            <div class="add-btn-box">
+              <!-- <button type="button" class="add-bar">+</button> -->
+            </div>
+          </div>
+        </div>
+        <processList v-if="item.children" :list="item.children"></processList>
+      </div>
+      <div class="end-node">结束</div>
     </div>
   </div>
 </template>
+  
 <script setup lang="ts">
-import nodeTree from "./processList.vue";
-type props = {
-  list: any[];
-};
-defineProps<props>();
+import processList from "../../components/process/processList.vue";
+import { ref } from "vue";
+const flowArr: any = ref([
+  {
+    taskName: "流程1",
+    approverName: "审计测试人员,test1",
+    children: [
+      {
+        taskName: "流程2",
+        approverName: "admin,审计局",
+        children: [
+          { taskName: "流程2", approverName: "admin,审计局" },
+          { taskName: "流程2", approverName: "admin,审计局" },
+        ],
+      },
+      {
+        taskName: "流程2",
+        approverName: "admin,审计局",
+        children: [
+          { taskName: "流程2", approverName: "admin,审计局" },
+          { taskName: "流程2", approverName: "admin,审计局" },
+        ],
+      },
+    ],
+  },
+  { taskName: "流程3", approverName: "审计单位账号,admin" },
+]);
 </script>
-<style lang="scss" scoped>
+  
+  <style lang="scss" scoped>
 .wrapper {
   position: relative;
   width: 100%;
@@ -218,11 +218,6 @@ defineProps<props>();
   height: 100%;
   background-color: #ccd4e0;
   position: relative;
-  .arrow-icon {
-    position: absolute;
-    bottom: -3px;
-    left: -6px;
-  }
 }
 .add-btn-box {
   width: 100%;
@@ -331,11 +326,6 @@ defineProps<props>();
   width: 1px;
   height: 100%;
   background-color: #dfdfe8;
-  .arrow-icon {
-    position: absolute;
-    bottom: -3px;
-    left: -6px;
-  }
 }
 .condition-node-box .auto-judge .del-btn,
 .transition {
@@ -399,3 +389,4 @@ defineProps<props>();
   text-align: center;
 }
 </style>
+  

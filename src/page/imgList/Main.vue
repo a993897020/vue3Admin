@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-07-01 15:50:32
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-15 10:14:42
+ * @LastEditTime: 2022-09-20 11:45:46
  * @Description: 
 -->
 <template>
@@ -12,7 +12,7 @@
     </div>
   </div>
 </template>
-<script lang='ts' setup>
+<script  lang='ts' setup >
 import Mock, { Random } from "mockjs";
 import { onMounted, ref } from "vue";
 import { onPending } from "utils/tools";
