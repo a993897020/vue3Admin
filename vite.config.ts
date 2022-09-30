@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 10:23:42
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-15 10:23:31
+ * @LastEditTime: 2022-09-27 15:29:42
  * @Description: 
  */
 import { defineConfig } from 'vite'
@@ -43,7 +43,7 @@ export default defineConfig({
 		proxy: {
 			// 选项写法
 			'/api': {
-				target: 'http://jsonplaceholder.typicode.com',
+				target: 'http://localhost:3050',
 				changeOrigin: true,
 				rewrite: path => path.replace(/^\/api/, '')
 			}

@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-07-19 16:04:42
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-14 10:55:55
+ * @LastEditTime: 2022-09-27 11:40:36
  * @Description: 左菜单
 -->
 <template>
@@ -21,11 +21,10 @@
       text-color="#fff"
       :router="true"
       active-text-color="#ffd04b"
-      default-active="dashboard"
+      :default-active="router.currentRoute.value.path"
       class="el-menu-vertical-demo"
       :collapse="props.isCollapse"
-      @open="handleOpen"
-      @close="handleClose"
+      :default-openeds="routerList.map((p) => p.link)"
     >
       <template v-for="(item, i) in routerList" :key="i">
         <el-menu-item :index="item.link" :key="i" v-if="!item.children">
@@ -83,13 +82,6 @@ const routerList = [
   { name: "聊天室", link: "/chatRoom", icon: ChatLineRound },
   { name: "流程图", link: "/tree", icon: Rank },
 ];
-
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
 </script>
 <style scoped lang="scss">
 .left-menu {

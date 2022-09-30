@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 11:11:22
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-22 17:25:13
+ * @LastEditTime: 2022-09-28 17:43:39
  * @Description: 
 -->
 <template>
@@ -14,15 +14,57 @@
 <script lang='ts' setup>
 import JoinChat from "@/components/chatroom/joinChat.vue";
 import ChatInterfact from "@/components/chatroom/chatInterfact.vue";
-import { Ref, ref } from "vue";
+import { onMounted, onUnmounted, Ref, ref } from "vue";
 import socket from "./socket";
 const alreadyHasUsername: Ref<boolean> = ref(false);
-const setUserName = (username: String) => {
+interface IChatUser {
+  username: string;
+  avatar: string;
+}
+const setUserName = ({ username, avatar }: IChatUser) => {
   alreadyHasUsername.value = true;
-  socket.auth = { username };
+  socket.auth = { username, avatar };
   socket.connect();
   console.log(socket);
 };
+const checkUserId = () => {
+  const userId = localStorage.getItem("suid");
+  if (userId) {
+    socket.auth = { userId };
+    socket.userId = userId;
+    socket.connect();
+    setTimeout(() => {
+      if (!socket.connected) {
+        return localStorage.removeItem("suid");
+      }
+    }, 1000);
+    alreadyHasUsername.value = true;
+  }
+};
+onMounted(() => {
+  checkUserId();
+  console.log({ socket });
+
+  socket.on("userId", (userId: string) => {
+    console.log("user", { userId });
+    socket.userId = userId;
+    localStorage.setItem("suid", userId);
+  });
+  socket.on("connect_error", (err: any) => {
+    if (err.message === "invalid username") {
+      alreadyHasUsername.value = false;
+    }
+  });
+});
+onUnmounted(() => {
+  socket.disconnect();
+  socket.off("connect");
+  socket.off("disconnect");
+  socket.off("users");
+  socket.off("user connected");
+  socket.off("user disconnected");
+  socket.off("private message");
+});
 </script>
 <style scoped>
 </style>

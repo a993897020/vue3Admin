@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 10:23:42
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-07 16:40:56
+ * @LastEditTime: 2022-09-27 15:21:43
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -13,11 +13,12 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import SvgIcon from './components/SvgIcon/index.vue'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-
+import request from './utils/request'
 
 const app = createApp(App)
 
 app.component('svg-icon', SvgIcon)
+app.config.globalProperties.$api=request
 
 app.use(ElementPlus, {
 	locale: zhCn

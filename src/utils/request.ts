@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 15:50:47
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-06-30 17:33:36
+ * @LastEditTime: 2022-09-27 15:30:00
  * @Description: 
  */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
@@ -15,7 +15,7 @@ function getSession(key: string): string {
 	return JSON.parse(json)
 }
 
-export const PATH_URL: string = 'http://mockjs.test.cn' || import.meta.env.VITE_API_URL
+export const PATH_URL: string = import.meta.env.VITE_API_URL
 
 // 配置新建一个 axios 实例
 const service: AxiosInstance = axios.create({
