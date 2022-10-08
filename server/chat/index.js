@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 15:27:35
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-30 16:43:09
+ * @LastEditTime: 2022-10-08 17:56:41
  * @Description: 
  */
 const express = require('express');
@@ -115,13 +115,14 @@ io.on('connection', (socket) => {
     })
 
     /**发送消息 */
-    socket.on('private message', ({ to, content, avatar }) => {
+    socket.on('private message', ({ to, content, avatar, lastTime }) => {
         console.log({ to, content })
         const msgItem = {
             to,
             from: socket.userId,
             avatar,
-            content
+            content,
+            lastTime
         }
         socket.to(to).to(socket.userId).emit('private message', msgItem)
         messageStore.saveMessage(msgItem)
@@ -141,7 +142,6 @@ io.on('connection', (socket) => {
                 connected: false,
             });
             console.log(`${socket.username}下线,id:${socket.userId}`)
-            console.log(`用户列表：${userStore.findAllUser()}`)
         }
     });
 })

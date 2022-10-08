@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-27 16:22:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-28 09:16:01
+ * @LastEditTime: 2022-10-08 17:25:43
  * @Description: 选择头像弹框
 -->
 <template>
@@ -12,7 +12,7 @@
     width="30%"
     :before-close="handleClose"
   >
-    <el-scrollbar height="550px">
+    <el-scrollbar height="300px">
       <div class="img-list">
         <div
           :class="['img-item', selectAvatar === item ? 'active' : '']"

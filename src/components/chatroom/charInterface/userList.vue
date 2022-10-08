@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-23 10:24:59
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-27 17:38:39
+ * @LastEditTime: 2022-10-08 18:07:52
  * @Description: 用户列表
 -->
 <template>
@@ -35,7 +35,11 @@
                 v-text="item.self ? item.username + '(me)' : item.username"
               ></div>
               <div class="user-info-lastTime">
-                {{ moment(new Date()).format("YYYY-MM-DD") }}
+                {{
+                  item.lastTime
+                    ? formatTime(item.lastTime)
+                    : moment(new Date()).format("YYYY-MM-DD")
+                }}
               </div>
             </div>
             <div class="message-wrap">
@@ -60,6 +64,7 @@
 import { Search } from "@element-plus/icons-vue";
 import { ref, Ref, defineProps, watch, computed, defineEmits } from "vue";
 import moment from "moment";
+import { formatTime } from "@/utils/tools";
 /**搜索过滤关键字 */
 const userfilVal: Ref<string> = ref("");
 const props: any = defineProps({

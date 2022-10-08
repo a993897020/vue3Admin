@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-23 10:25:34
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-30 16:28:40
+ * @LastEditTime: 2022-10-08 17:56:13
  * @Description: 聊天内容
 -->
 <template>
@@ -95,9 +95,13 @@ watch(
   () => props.selectUser,
   async () => {
     if (props.selectUser.messages.length > 0) {
-      await onPending(100);
+      await onPending(50);
       scrollBottom();
     }
+  },
+  {
+    deep: true,
+    immediate: true,
   }
 );
 const emit = defineEmits(["sendMsg"]);
@@ -116,6 +120,7 @@ const sendMsg = (e: any) => {
       emit("sendMsg", {
         content: msgVal.value,
         avatar: props.selectUser.avatar,
+        lastTime: new Date().getTime(),
       });
       keyDownList.value = [];
       msgVal.value = "";
@@ -163,7 +168,7 @@ defineExpose({ scrollBottom });
       flex: 0.8;
       position: relative;
       .el-scrollbar {
-        height: 60%;
+        height: calc(100% - 200px);
       }
       .chat-content-list {
         padding: 20px;
@@ -216,7 +221,7 @@ defineExpose({ scrollBottom });
         bottom: 0;
         left: 4px;
         padding: 20px;
-        height: 280px;
+        height: 200px;
         overflow: hidden;
         background: #fff;
         & > textarea {

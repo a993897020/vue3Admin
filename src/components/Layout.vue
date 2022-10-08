@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-21 15:57:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-26 11:03:49
+ * @LastEditTime: 2022-10-08 17:27:57
  * @Description: 
 -->
 <template>
@@ -88,6 +88,7 @@ watch(
 @import "styles/mixins.scss";
 .container-box {
   height: 100vh;
+  overflow: auto;
 }
 .layout-header {
   position: fixed;
@@ -132,9 +133,13 @@ watch(
   margin-right: 15px;
 }
 .content-wrap {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 150px);
+  .content-main {
+    height: 100%;
+  }
   .content-main .content-scroll {
     padding: 20px;
+    height: 100%;
   }
 }
 .header-wrap {

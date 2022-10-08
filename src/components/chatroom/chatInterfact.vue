@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 15:06:26
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-30 16:25:51
+ * @LastEditTime: 2022-10-08 17:55:56
  * @Description: 聊天界面
 -->
 <template>
@@ -60,6 +60,8 @@ onMounted(() => {
       }
       /**没有该用户，进行添加 */
       user.self = user.userId === socket.userId;
+      user.lastMsg = user.messages.length > 0 ? user.message.at(-1) : "";
+      user.lastTime = user.lastTime;
       user.hasNewMessage = false;
       allUserList.value.push(user);
     });
@@ -94,7 +96,9 @@ onMounted(() => {
   });
   /**用户上线提示 */
   socket.on("online", (username: string) => {
-    ElMessage.success(`欢迎${username}上线！！`);
+    if (username) {
+      ElMessage.success(`欢迎${username}上线！！`);
+    }
   });
 
   socket.on("user disconnected", (id: string) => {
@@ -117,16 +121,18 @@ onMounted(() => {
     });
   });
 });
-const sendPrivateMessage = async ({ content, avatar }: any) => {
+const sendPrivateMessage = async ({ content, avatar, lastTime }: any) => {
   socket.emit("private message", {
     to: selectUser.value.userId,
     content,
     avatar,
+    lastTime,
   });
   selectUser.value.messages.push({
     content,
     fromSelf: true,
     avatar,
+    lastTime,
   });
   /**滚动到底部。 */
   await onPending(100);
@@ -137,7 +143,7 @@ const sendPrivateMessage = async ({ content, avatar }: any) => {
 .chat-wrap {
   display: flex;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
-  height: 84vh;
+  height: 80vh;
   .userList-wrap {
     width: 300px;
     flex: 0.2;
