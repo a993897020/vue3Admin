@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-23 10:24:59
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-08 18:07:52
+ * @LastEditTime: 2022-10-09 14:41:02
  * @Description: 用户列表
 -->
 <template>
@@ -44,10 +44,7 @@
             </div>
             <div class="message-wrap">
               <div class="user-item-message">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Doloribus mollitia fuga assumenda voluptatibus. Nihil nobis
-                adipisci in voluptate dolor mollitia veritatis esse, fugit, ea
-                tempore impedit illum eum error excepturi!
+                {{ item.lastMsg }}
               </div>
               <div class="user-item-message-tip" v-if="item.hasNewMessage">
                 !
@@ -154,6 +151,7 @@ const onSelect = (user: any) => {
       }
       .user-item-info {
         overflow: hidden;
+        width: 100%;
         .user-item-info-nt {
           display: flex;
           justify-content: space-between;

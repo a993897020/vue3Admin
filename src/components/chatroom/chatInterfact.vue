@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 15:06:26
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-08 17:55:56
+ * @LastEditTime: 2022-10-09 15:03:00
  * @Description: 聊天界面
 -->
 <template>
@@ -60,8 +60,9 @@ onMounted(() => {
       }
       /**没有该用户，进行添加 */
       user.self = user.userId === socket.userId;
-      user.lastMsg = user.messages.length > 0 ? user.message.at(-1) : "";
-      user.lastTime = user.lastTime;
+      const lastMsg = user.messages.length > 0 ? user.messages.at(-1) : "";
+      user.lastMsg = lastMsg ? lastMsg.content : "";
+      user.lastTime = lastMsg ? lastMsg.lastTime : "";
       user.hasNewMessage = false;
       allUserList.value.push(user);
     });
@@ -81,19 +82,24 @@ onMounted(() => {
       allUserList.value.push(user);
     }
   });
-  socket.on("private message", ({ to, from, avatar, content }: any) => {
-    console.log({ to, from, avatar, content });
-    for (let i = 0; i < allUserList.value.length; i++) {
-      const user = allUserList.value[i];
-      const fromSelf = user.userId === from; //判断是否当前用户发送
-      if (!user.self && user.userId === (fromSelf ? from : to)) {
-        user.messages.push({ fromSelf: !fromSelf, content, avatar });
-        if (selectUser.value.userId !== user.userId) {
-          user.hasNewMessage = true;
+  socket.on(
+    "private message",
+    ({ to, from, avatar, content, lastTime }: any) => {
+      console.log({ to, from, avatar, content });
+      for (let i = 0; i < allUserList.value.length; i++) {
+        const user = allUserList.value[i];
+        const fromSelf = user.userId === from; //判断是否当前用户发送
+        if (!user.self && user.userId === (fromSelf ? from : to)) {
+          user.messages.push({ fromSelf: !fromSelf, content, avatar });
+          user.lastMsg = content;
+          user.lastTime = lastTime;
+          if (selectUser.value.userId !== user.userId) {
+            user.hasNewMessage = true;
+          }
         }
       }
     }
-  });
+  );
   /**用户上线提示 */
   socket.on("online", (username: string) => {
     if (username) {
@@ -134,6 +140,8 @@ const sendPrivateMessage = async ({ content, avatar, lastTime }: any) => {
     avatar,
     lastTime,
   });
+  selectUser.value.lastMsg = content;
+  selectUser.value.lastTime = lastTime;
   /**滚动到底部。 */
   await onPending(100);
   chatContent.value.scrollBottom();

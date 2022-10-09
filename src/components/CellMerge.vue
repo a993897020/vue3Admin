@@ -2,12 +2,12 @@
  * @Author: 关振俊
  * @Date: 2022-07-19 10:18:17
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-19 11:19:28
+ * @LastEditTime: 2022-10-09 14:24:57
  * @Description: 表格单元格合并
 -->
 <template>
   <div>
-    <el-table
+    <!-- <el-table
       :data="tableData"
       :span-method="arraySpanMethod"
       border
@@ -18,7 +18,7 @@
       <el-table-column prop="amount1" sortable label="Amount 1" />
       <el-table-column prop="amount2" sortable label="Amount 2" />
       <el-table-column prop="amount3" sortable label="Amount 3" />
-    </el-table>
+    </el-table> -->
 
     <el-table
       :data="tableData"
@@ -26,7 +26,7 @@
       border
       style="width: 100%; margin-top: 20px"
     >
-      <el-table-column prop="id" label="ID" width="180" />
+      <!-- <el-table-column prop="id" label="ID" width="180" /> -->
       <el-table-column prop="name" label="Name" />
       <el-table-column prop="amount1" label="Amount 1" />
       <el-table-column prop="amount2" label="Amount 2" />
@@ -83,8 +83,8 @@ const arraySpanMethod = ({
   //     }
   //     console.log({ i });
   //   }
-  if (rowIndex === 0 && columnIndex === 0) return [2, 1];
-  if (rowIndex === 1 && columnIndex === 0) return [2, 1];
+  // if (rowIndex === 0 && columnIndex === 0) return [2, 1];
+  // if (rowIndex === 1 && columnIndex === 0) return [2, 1];
   return [1, 1];
 };
 
@@ -94,20 +94,48 @@ const objectSpanMethod = ({
   rowIndex,
   columnIndex,
 }: SpanMethodProps) => {
+  // if (columnIndex === 0) {
+  //   if (rowIndex % 2 === 0) {
+  //     return {
+  //       rowspan: 2,
+  //       colspan: 1,
+  //     };
+  //   } else {
+  //     return {
+  //       rowspan: 0,
+  //       colspan: 0,
+  //     };
+  //   }
+  // }
+  // return [1, 1];
   if (columnIndex === 0) {
-    if (rowIndex % 2 === 0) {
-      return {
-        rowspan: 2,
-        colspan: 1,
-      };
+    const namespan = getSpanMethod(tableData, "name");
+    return {
+      rowspan: namespan[rowIndex],
+      colspan: 1,
+    };
+  } else {
+    return {
+      rowspan: 1,
+      colspan: 1,
+    };
+  }
+};
+const getSpanMethod = (data: any[], prop: string): any[] => {
+  let position = 0; //当前遍历位置
+  let temp = data[0][prop]; //获取第一列prop的值，遍历匹配目标值
+  const result = [1]; //第一列第一个单元格默认为1
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][prop] === temp) {
+      result[position] += 1;
+      result[i] = 0;
     } else {
-      return {
-        rowspan: 0,
-        colspan: 0,
-      };
+      position = i;
+      result[position] = 1;
+      temp = data[i][prop];
     }
   }
-  return [1, 1];
+  return result;
 };
 
 const tableData: User[] = [
@@ -126,24 +154,24 @@ const tableData: User[] = [
     amount3: 12,
   },
   {
-    id: "12987124",
-    name: "Tom",
-    amount1: "324",
-    amount2: "1.9",
-    amount3: 9,
-  },
-  {
     id: "12987125",
-    name: "Tom",
+    name: "Jack",
     amount1: "621",
     amount2: "2.2",
     amount3: 17,
   },
   {
     id: "12987126",
-    name: "Tom",
+    name: "Jeni",
     amount1: "539",
     amount2: "4.1",
+    amount3: 15,
+  },
+  {
+    id: "12987123",
+    name: "Jeni",
+    amount1: "666",
+    amount2: "6.1",
     amount3: 15,
   },
 ];
