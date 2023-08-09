@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-17 15:48:17
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-22 11:47:31
+ * @LastEditTime: 2022-12-01 17:22:39
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -86,6 +86,21 @@ const router = createRouter({
 					name:'流程图',
 					path:'/tree',
 					component:tree
+				},
+				{
+					name:'上传文件',
+					path:'/upload',
+					component:()=>import('@/page/upload/Main.vue')
+				},
+				{
+					name:'查找关键字',
+					path:'/searchKeyword',
+					component:()=>import('@/page/searchKeyword/Main.vue')
+				},
+				{
+					name:'你输我做',
+					path:'youInputMyDo',
+					component:()=>import('@/page/youInputMyDo/Main.vue')
 				}
 			]
 		},

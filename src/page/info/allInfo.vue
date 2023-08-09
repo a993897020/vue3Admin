@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-28 09:42:18
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-08-30 11:24:29
+ * @LastEditTime: 2022-11-29 17:38:37
  * @Description: 信息
 -->
 <template>
@@ -80,10 +80,17 @@
     </el-drawer>
   </div>
 </template>
-<script lang='ts' setup>
+
+<script lang='ts' setup >
 import { ElDrawer, ElMessageBox } from "element-plus";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref, onActivated } from "vue";
 import moment from "moment";
+onMounted(() => {
+  console.log("mounted");
+});
+onActivated(() => {
+  console.log("active");
+});
 let tableData = reactive([
   {
     date: "2016-05-03",
@@ -194,6 +201,11 @@ const cancelForm = () => {
   showDialog.value = false;
   currentNum.value = 0;
   clearTimeout(timer);
+};
+</script>
+<script lang="ts">
+export default {
+  name: "信息列表",
 };
 </script>
 <style scoped>

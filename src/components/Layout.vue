@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-06-21 15:57:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-08 17:27:57
+ * @LastEditTime: 2022-10-19 15:52:37
  * @Description: 
 -->
 <template>
@@ -42,7 +42,7 @@
             <el-main class="content-main">
               <el-scrollbar class="content-scroll">
                 <router-view v-slot="{ Component, route }">
-                  <keep-alive :include="tags">
+                  <keep-alive :include="cache" :max="10">
                     <component
                       :is="Component"
                       :key="route.fullPath"
@@ -73,13 +73,12 @@ const handleMenuCollapse = () => {
 };
 // const key = computed(() => router.currentRoute.value.path);
 // const tags = computed(() => store.state.routerList);
-const tags: Ref<any[]> = ref([]);
+const cache: Ref<any[]> = ref([]);
 watch(
   [() => store.state.routerList, () => router.currentRoute.value],
   ([list, route]) => {
     // console.log({ list, route });
-    tags.value = store.state.routerList.map((p) => p.name);
-    // console.log(tags.value);
+    cache.value = store.state.routerList.map((p) => p.name);
   }
 );
 </script>

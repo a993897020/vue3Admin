@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-27 16:22:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-08 17:25:43
+ * @LastEditTime: 2022-12-02 09:22:56
  * @Description: 选择头像弹框
 -->
 <template>
@@ -35,8 +35,6 @@
 </template>
 <script lang='ts' setup>
 import {
-  defineProps,
-  defineEmits,
   onMounted,
   Ref,
   ref,

@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-07-01 16:07:26
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-07-14 17:44:17
+ * @LastEditTime: 2022-11-01 18:00:36
  * @Description: 画布签名
 -->
 <template>
@@ -101,7 +101,66 @@ const createCancas = () => {
   console.log("create");
   const url: string = signCanvas.value.toDataURL("image/png", 1); //生成画布base64
   canvasImgList.value.push(url);
+  console.log(canvasImgList.value);
+  // toFile();
 };
+/**生成文件 */
+const toFile = () => {
+  const base64 = canvasImgList.value[0].split(",")[1];
+  const fileType = "pdf";
+  const fileName = "canvas文件";
+  let typeHeader = "data:application/" + fileType + ";base64,"; // 定义base64 头部文件类型
+  const converedBase64 = typeHeader + base64;
+  const blob: any = base64ToBlob(canvasImgList.value[0], fileType);
+  downloadExportFile(blob, fileName, fileType);
+};
+/**
+ * desc: base64对象转blob文件对象
+ * @param urlData  ：数据的base64对象
+ * @param type  ：类型 png,pdf,doc,mp3等;
+ * @returns {Blob}：Blob文件对象
+ **/
+const base64ToBlob = (base64: string, type: string) => {
+  let arr = base64.split(",");
+  let array = arr[0].match(/:(.*?);/);
+  let mime = (array && array.length > 1 ? array[1] : type) || type;
+  // 去掉url的头，并转化为byte
+  let bytes = window.atob(arr[1]);
+  // 处理异常,将ascii码小于0的转换为大于0
+  let ab = new ArrayBuffer(bytes.length);
+  // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
+  let ia = new Uint8Array(ab);
+  for (let i = 0; i < bytes.length; i++) {
+    ia[i] = bytes.charCodeAt(i);
+  }
+  return new Blob([ab], {
+    type: mime,
+  });
+};
+/**
+ * desc: 下载导出文件
+ * @param blob  ：返回数据的blob对象或链接
+ * @param fileName  ：下载后文件名标记
+ * @param fileType  ：文件类 word(docx) excel(xlsx) ppt等
+ */
+const downloadExportFile = (blob: any, fileName: string, fileType: string) => {
+  let downloadElement = document.createElement("a");
+  let href = blob;
+  if (typeof blob == "string") {
+    downloadElement.target = "_blank";
+  } else {
+    href = window.URL.createObjectURL(blob); //创建下载的链接
+  }
+  downloadElement.href = href;
+  downloadElement.download = fileName + "." + fileType; //下载后文件名
+  document.body.appendChild(downloadElement);
+  downloadElement.click(); //触发点击下载
+  document.body.removeChild(downloadElement); //下载完成移除元素
+  if (typeof blob != "string") {
+    window.URL.revokeObjectURL(href); //释放掉blob对象
+  }
+};
+
 /**切换横竖屏 */
 const rorateCancas = () => {
   isRotate.value = !isRotate.value;

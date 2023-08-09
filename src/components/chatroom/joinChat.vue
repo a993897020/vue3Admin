@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 11:43:53
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-27 17:22:43
+ * @LastEditTime: 2022-12-02 09:22:10
  * @Description: 登录聊天室
 -->
 <template>
@@ -48,7 +48,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, defineEmits, Ref, onMounted } from "vue";
+import { ref, Ref, onMounted } from "vue";
 import { Random } from "mockjs";
 import SelectAvatarDialog from "./joinChat/selectAvatarDialog.vue";
 import { ElMessage } from "element-plus";

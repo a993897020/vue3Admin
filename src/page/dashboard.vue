@@ -2,20 +2,20 @@
  * @Author: 关振俊
  * @Date: 2022-06-28 10:53:31
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-08-30 15:20:55
+ * @LastEditTime: 2022-12-29 11:45:35
  * @Description: 首页
 -->
 <template>
   <div class="game-container">
-    <!-- <el-button type="primary" @click="socketShakeHands">握手</el-button> -->
-    home
+    <p :contenteditable="true">home</p>
+    <animationText :texts="['花里胡哨文字渐出渐入']"></animationText>
+    <test></test>
   </div>
 </template>
 
 <script lang='ts' setup>
-const socketShakeHands = () => {
-  console.log("shake handing...");
-};
+import animationText from "@/components/animationText.vue";
+import test from "@/components/Test.vue";
 </script>
 <style scoped lang="scss">
 .game-container {

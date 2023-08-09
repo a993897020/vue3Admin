@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-23 10:25:34
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-08 17:56:13
+ * @LastEditTime: 2023-02-07 11:43:48
  * @Description: 聊天内容
 -->
 <template>
@@ -78,7 +78,7 @@
 </template>
 <script lang='ts' setup>
 import { BellFilled } from "@element-plus/icons-vue";
-import { Ref, ref, defineProps, defineEmits, defineExpose, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { onPending } from "@/utils/tools";
 const msgVal: Ref<string> = ref("");
@@ -87,6 +87,10 @@ const sendInput: Ref = ref(null);
 const scrollBar: Ref = ref(null);
 const props = defineProps({
   selectUser: {
+    type: Object,
+    default: () => {},
+  },
+  chatUser: {
     type: Object,
     default: () => {},
   },
@@ -119,7 +123,7 @@ const sendMsg = (e: any) => {
     } else {
       emit("sendMsg", {
         content: msgVal.value,
-        avatar: props.selectUser.avatar,
+        avatar: props.chatUser.avatar,
         lastTime: new Date().getTime(),
       });
       keyDownList.value = [];

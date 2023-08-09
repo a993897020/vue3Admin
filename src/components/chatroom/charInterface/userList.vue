@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-23 10:24:59
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-09 14:41:02
+ * @LastEditTime: 2022-12-02 09:21:56
  * @Description: 用户列表
 -->
 <template>
@@ -59,7 +59,7 @@
 
 <script lang='ts' setup>
 import { Search } from "@element-plus/icons-vue";
-import { ref, Ref, defineProps, watch, computed, defineEmits } from "vue";
+import { ref, Ref, watch, computed } from "vue";
 import moment from "moment";
 import { formatTime } from "@/utils/tools";
 /**搜索过滤关键字 */

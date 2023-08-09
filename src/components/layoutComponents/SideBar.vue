@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-07-19 16:04:42
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-27 11:40:36
+ * @LastEditTime: 2022-12-02 09:23:00
  * @Description: 左菜单
 -->
 <template>
@@ -62,9 +62,11 @@ import {
   ChatLineRound,
   Rank,
   ElemeFilled,
+  UploadFilled,
+  Search,
+  WindPower,
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
-import { defineProps } from "vue";
 const props = defineProps({
   isCollapse: Boolean,
 });
@@ -81,6 +83,9 @@ const routerList = [
   { name: "合并单元格", link: "/cellMerge", icon: Grid },
   { name: "聊天室", link: "/chatRoom", icon: ChatLineRound },
   { name: "流程图", link: "/tree", icon: Rank },
+  { name: "上传文件", link: "/upload", icon: UploadFilled },
+  { name: "查找关键字", link: "/searchKeyword", icon: Search },
+  { name: "你输我做", link: "/youInputMyDo", icon: WindPower },
 ];
 </script>
 <style scoped lang="scss">
@@ -106,11 +111,6 @@ const routerList = [
   }
   .el-menu--collapse {
     width: 100% !important;
-    :deep(.el-sub-menu .el-sub-menu__title),
-    :deep(.el-menu-item .el-menu-tooltip__trigger) {
-      // padding-left: 10px !important;
-      // justify-content: center !important;
-    }
   }
 }
 </style>

@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 11:11:22
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-09-28 17:43:39
+ * @LastEditTime: 2023-02-07 11:51:28
  * @Description: 
 -->
 <template>
@@ -28,14 +28,14 @@ const setUserName = ({ username, avatar }: IChatUser) => {
   console.log(socket);
 };
 const checkUserId = () => {
-  const userId = localStorage.getItem("suid");
+  const userId = sessionStorage.getItem("suid");
   if (userId) {
     socket.auth = { userId };
     socket.userId = userId;
     socket.connect();
     setTimeout(() => {
       if (!socket.connected) {
-        return localStorage.removeItem("suid");
+        return sessionStorage.removeItem("suid");
       }
     }, 1000);
     alreadyHasUsername.value = true;
@@ -48,7 +48,7 @@ onMounted(() => {
   socket.on("userId", (userId: string) => {
     console.log("user", { userId });
     socket.userId = userId;
-    localStorage.setItem("suid", userId);
+    sessionStorage.setItem("suid", userId);
   });
   socket.on("connect_error", (err: any) => {
     if (err.message === "invalid username") {
@@ -57,6 +57,7 @@ onMounted(() => {
   });
 });
 onUnmounted(() => {
+  console.log("disconnect");
   socket.disconnect();
   socket.off("connect");
   socket.off("disconnect");
@@ -64,6 +65,7 @@ onUnmounted(() => {
   socket.off("user connected");
   socket.off("user disconnected");
   socket.off("private message");
+  sessionStorage.removeItem("suid");
 });
 </script>
 <style scoped>

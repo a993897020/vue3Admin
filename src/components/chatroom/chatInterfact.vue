@@ -2,7 +2,7 @@
  * @Author: 关振俊
  * @Date: 2022-09-22 15:06:26
  * @LastEditors: 关振俊
- * @LastEditTime: 2022-10-09 15:03:00
+ * @LastEditTime: 2023-02-07 14:16:12
  * @Description: 聊天界面
 -->
 <template>
@@ -19,6 +19,7 @@
     <div class="chatContent-wrap">
       <ChatContent
         ref="chatContent"
+        :chatUser="chatUser"
         :selectUser="selectUser"
         @send-msg="sendPrivateMessage"
         v-if="selectUser"
@@ -36,10 +37,12 @@ import { onPending } from "@/utils/tools";
 const allUserList: Ref<any[]> = ref([]);
 const selectUser: Ref<any> = ref(null);
 const chatContent: Ref = ref(null);
+const chatUser: Ref<any> = ref(null);
 onMounted(() => {
   socket.on("connect", () => {
     console.log("连接成功！");
   });
+  socket.debug;
   socket.on("users", (users: any[]) => {
     console.log({ users });
     users.forEach((user) => {
@@ -60,6 +63,9 @@ onMounted(() => {
       }
       /**没有该用户，进行添加 */
       user.self = user.userId === socket.userId;
+      if (user.self) {
+        chatUser.value = user;
+      }
       const lastMsg = user.messages.length > 0 ? user.messages.at(-1) : "";
       user.lastMsg = lastMsg ? lastMsg.content : "";
       user.lastTime = lastMsg ? lastMsg.lastTime : "";
